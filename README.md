@@ -216,7 +216,6 @@ difficile di una demo. Queste sono le sfide principali affrontate.
 - La libreria standard di Python per questa conversione è stata **rimossa da Python 3.13**: va
   sostituita con un pacchetto esterno.
 - Eco, rumore di fondo, linee disturbate, persone che parlano in auto o in un locale affollato.
-- Nei test in locale col PC servono le **cuffie**, altrimenti l'agente sente se stesso.
 
 ### 3. Function calling in tempo reale
 - Mentre uno strumento lavora (es. controllo dei tavoli sul database) l'audio **non deve fermarsi**:
