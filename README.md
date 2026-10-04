@@ -11,6 +11,23 @@ una **dashboard web** usata dal personale in sala, dal tablet o dal telefono.
 > funzionalità, le difficoltà incontrate (e come sono state affrontate) e la visione futura del
 > progetto: da agente telefonico per attività commerciali a **assistente personale stile Jarvis**.
 
+### ⚡ In breve
+- **In produzione**, con telefonate vere di clienti veri: non è un prototipo da demo.
+- **Agente AI con strumenti** (16 funzioni: disponibilità, prenotazioni, ordini, modifiche,
+  disdette, trasferimento, richiamate…) che agisce su un database reale.
+- **Human-in-the-loop**: nessuna azione viene salvata senza che il cliente l'abbia detta e
+  confermata; un livello di verifica blocca i dati inventati dal modello.
+- **Tempo reale**: audio bidirezionale, interruzioni gestite, strumenti asincroni che non bloccano la voce.
+- **Prodotto completo**: backend, telefonia, dashboard web responsive, deploy, sicurezza, log e test.
+- Progettato, sviluppato e messo in produzione **da solo**, end-to-end.
+
+> 🇬🇧 **TL;DR** — A production real-time **AI voice agent** that answers a restaurant's phone line,
+> books tables and takes orders through **tool calling** with a **human-confirmation and grounding
+> layer** (no action is committed unless the caller said and confirmed it), plus a staff dashboard
+> sharing the same data. Stack: Gemini Live (speech-to-speech), Telnyx, Python/FastAPI, Firestore,
+> Cloud Run. Roadmap: on-device AI, autonomous agents that propose actions (including payments) and
+> wait for user approval, up to a Jarvis-like assistant for computer, phone, smartwatch and smart home.
+
 ---
 
 ## 📑 Indice
@@ -22,6 +39,7 @@ una **dashboard web** usata dal personale in sala, dal tablet o dal telefono.
 5. [Difficoltà del progetto](#-difficoltà-del-progetto)
 6. [Roadmap e sviluppi futuri](#-roadmap-e-sviluppi-futuri)
 7. [Principi di progettazione](#-principi-di-progettazione)
+8. [Competenze dimostrate](#-competenze-dimostrate)
 
 ---
 
@@ -327,6 +345,26 @@ L'assistente esce dal computer e accompagna la **vita di tutti i giorni**.
 l'ascolto in background, connettività instabile, latenza su rete cellulare, sincronizzazione della
 memoria tra dispositivi, privacy dei dati sanitari e della posizione.
 
+### 🔐 Direzione trasversale — AI on-device e agenti economici autonomi
+Un filo che attraversa le fasi 2–5: portare l'intelligenza **sul dispositivo** e permettere
+all'agente di **gestire valore**, sempre con l'utente che approva.
+- **Modelli locali** (riconoscimento vocale, LLM piccoli, sintesi) che girano su PC e telefono:
+  niente audio né dati personali inviati al cloud, funzionamento anche offline.
+- **Pagamenti nella conversazione**: l'agente prepara un pagamento (caparra di una prenotazione,
+  ordine d'asporto, fattura, rimborso) e lo **propone**; parte solo dopo la conferma esplicita
+  dell'utente. È lo stesso schema già in produzione per le prenotazioni: *il modello propone, il
+  codice verifica, l'umano approva*.
+- **Wallet self-custodial**: le chiavi restano sul dispositivo dell'utente, nessun intermediario
+  che custodisce i fondi; l'assistente può leggere saldi e movimenti in locale.
+- **Intelligenza finanziaria privata**: budget, spese ricorrenti, avvisi su movimenti sospetti,
+  elaborati dal modello locale senza condividere i dati.
+- **Agente che paga per te**, con limiti di spesa, liste di destinatari fidati e conferma vocale
+  o biometrica per ogni operazione fuori dalle regole.
+
+**Difficoltà specifiche**: modelli locali abbastanza piccoli da girare su un telefono ma abbastanza
+affidabili da non sbagliare un importo; impedire che un comando vocale contraffatto o una prompt
+injection muovano fondi; UX della conferma che sia sicura ma non fastidiosa.
+
 ### 🏠 Fase 5 — J.A.R.V.I.S.: casa domotica e studio
 L'obiettivo finale: un assistente che **vive nell'ambiente**, conosce chi ci abita e controlla tutto.
 
@@ -363,6 +401,22 @@ sempre attivi, riconoscimento del parlante, gestione di più persone che parlano
 4. **Un umano è sempre raggiungibile.** Quando l'agente non può aiutare, passa la mano o fa richiamare.
 5. **Misurare, non supporre.** Il comportamento reale di modelli e API si verifica con test e log.
 6. **Privacy e sicurezza dal primo giorno.** Segreti protetti, endpoint verificati, dati minimi.
+
+---
+
+## 🎯 Competenze dimostrate
+
+| Area | Cosa ho fatto in questo progetto |
+|---|---|
+| **AI agentica** | Agente con function calling su dati reali, strumenti asincroni, prompt di sistema come codice, gestione dei limiti del modello misurati sul campo |
+| **Affidabilità degli LLM** | Livello di *grounding* che verifica ogni argomento degli strumenti contro la trascrizione, conferme esplicite prima di ogni azione, rifiuto dei dati inventati |
+| **Sistemi in tempo reale** | Audio bidirezionale su WebSocket, `asyncio`, conversione di formati audio, barge-in, concorrenza tra più chiamate |
+| **Sicurezza** | Verifica di firme **Ed25519**, **HMAC** sui dati dello stream, gestione dei segreti, password cifrate, ruoli e permessi |
+| **Backend e dati** | FastAPI, API REST, SQLite / Firestore dietro un'unica interfaccia, storico e annullamento delle modifiche |
+| **Prodotto e UX** | Dashboard responsive pensata per chi lavora in sala, flussi vocali progettati per clienti reali |
+| **Cloud e DevOps** | Docker, Cloud Run, Cloud Build, Secret Manager, Cloud Scheduler, log strutturati per chiamata |
+| **Qualità** | Test automatici su motore, server e dashboard; le telefonate reali problematiche diventano casi di test |
+| **Esecuzione** | Dall'idea alla produzione in poche settimane, iterando sulle chiamate vere e sul feedback del titolare |
 
 ---
 
