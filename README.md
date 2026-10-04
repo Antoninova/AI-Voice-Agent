@@ -273,7 +273,6 @@ Al telefono un errore diventa una prenotazione sbagliata. Per questo esiste un l
   costo al minuto cresce con la durata della chiamata, quindi le istruzioni vanno tenute compatte.
 - La Live API è disponibile **solo in alcune region**: va scelta vicina ai clienti.
 - Codifica **UTF-8** ovunque: senza, accenti e caratteri speciali arrivano corrotti nei log.
-- Token OAuth che scadono (app in modalità test: 7 giorni) → passaggio a un service account.
 
 ### 10. Osservabilità e test
 - Più telefonate in contemporanea producono log intrecciati: serve una **sigla per chiamata** su
